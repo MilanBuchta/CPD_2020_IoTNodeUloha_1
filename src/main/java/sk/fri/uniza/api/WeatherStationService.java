@@ -45,22 +45,36 @@ public interface WeatherStationService {
                                               @Query("from") String from,
                                               @Query("to") String to,
                                               @Query("fields") List<String> fields);
+    @Headers({
+            "Content-Type: application/x-www-form-urlencoded"
+    })
+    @POST("/apikey/createjwt")
+    Call<Token> getToken(@Header("Authorization") String authorization, @Query("claims") List<String> claims);
 
-    // ... getToken(authorization, claims);
+    @GET("/weather/locations")
+    Call<List<Location>> getStationLocationsAuth(@Header("Authorization") String authorization);
 
+    @GET("/weather/{station}/current")
+    Call<WeatherData> getCurrentWeatherAuth(@Header("Authorization") String authorization, @Path("station") String station);
 
-    // ... getStationLocationsAuth(authorization);
+    @GET("/weather/{station}/current")
+    Call<WeatherData> getCurrentWeatherAuth(@Header("Authorization") String authorization ,@Path("station") String station,
+                                           @Query("fields") List<String> fields);
 
+    @GET("/weather/{station}/history")
+    Call<List<WeatherData>> getHistoryWeatherAuth(
+            @Header("Authorization") String authorization,
+            @Path("station") String station,
+            @Query("from") String from,
+            @Query("to") String to );
 
-    // ... getCurrentWeatherAuth(authorization, station);
-
-
-    // ... getCurrentWeatherAuth(authorization, station, fields);
-
-
-    // ... getHistoryWeatherAuth(authorization, station, from, to);
-
-
-    // ... getHistoryWeatherAuth(authorization, station, from, to, fields);
+    @GET("/weather/{station}/history")
+    Call<List<WeatherData>> getHistoryWeatherAuth(
+            @Header("Authorization") String authorization,
+            @Path("station") String station,
+            @Query("from") String from,
+            @Query("to") String to,
+            @Query("fields") List<String> fields
+            );
 
 }

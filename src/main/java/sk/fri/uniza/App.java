@@ -8,6 +8,7 @@ import sk.fri.uniza.model.WeatherData;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Hello IoT!
@@ -76,24 +77,29 @@ public class App {
 //            e.printStackTrace();
 //        }
 
-        // Vytvorenie požiadavky na získanie údajov o všetkých meteo staniciach
-        Call<List<WeatherData>> historyData =
-                iotNode.getWeatherStationService().getHistoryWeather("station_1","19/01/2021 15:00","21/01/2021 15:00",  List.of("time", "date",
-                        "airTemperature"));
+//        // Vytvorenie požiadavky na získanie údajov o všetkých meteo staniciach
+//        Call<List<WeatherData>> historyData =
+//                iotNode.getWeatherStationService().getHistoryWeather("station_1","19/01/2021 15:00","21/01/2021 15:00",  List.of("time", "date",
+//                        "airTemperature"));
+//
+//        try {
+//            Response<List<WeatherData>> response = historyData.execute();
+//
+//            if (response.isSuccessful()) { // Dotaz na server bol neúspešný
+//                //Získanie údajov vo forme Zoznam lokacií
+//                List<WeatherData> body = response.body();
+//
+//                System.out.println(body);
+//            }
+//
+//        } catch (IOException e) {
+//            e.printStackTrace();
+//        }
 
-        try {
-            Response<List<WeatherData>> response = historyData.execute();
 
-            if (response.isSuccessful()) { // Dotaz na server bol neúspešný
-                //Získanie údajov vo forme Zoznam lokacií
-                List<WeatherData> body = response.body();
+        Optional<Double> data = iotNode.getAverageTemperature("station_1","19/01/2021 15:00","21/01/2021 15:00");
+        data.ifPresent(vysledok -> System.out.println(vysledok));
 
-                System.out.println(body);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
 
 
     }

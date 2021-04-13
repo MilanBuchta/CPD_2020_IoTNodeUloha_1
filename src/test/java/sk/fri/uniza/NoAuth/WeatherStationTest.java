@@ -154,9 +154,9 @@ public class WeatherStationTest {
         IotNode iotNode = new IotNode();
         Call<List<WeatherData>> currentWeather =
                 iotNode.getWeatherStationService()
-                        .getHistoryWeather("station_1", "01/01/2020 00:00",
+                        .getHistoryWeather("station_1", "01/01/2021 00:00",
                                 "02" +
-                                        "/01/2020 00:00");
+                                        "/01/2021 00:00");
         try {
             Response<List<WeatherData>> response = currentWeather.execute();
             assertTrue(response.isSuccessful(),
@@ -164,8 +164,8 @@ public class WeatherStationTest {
                             (response.errorBody() != null ?
                                     response.errorBody().string() : ""));
             List<WeatherData> body = response.body();
-            LocalDateTime dateTime = LocalDateTime.of(2020, 01, 01, 0, 0);
-            LocalDateTime stopDate = LocalDateTime.of(2020, 01, 02, 0, 0);
+            LocalDateTime dateTime = LocalDateTime.of(2021, 01, 01, 0, 0);
+            LocalDateTime stopDate = LocalDateTime.of(2021, 01, 02, 0, 0);
 
             for (WeatherData weatherData : body) {
                 LocalTime localTime =
